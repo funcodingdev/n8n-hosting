@@ -27,6 +27,10 @@ services:
     image: docker.n8n.io/n8nio/n8n
     restart: always
     environment:
+      - GENERIC_TIMEZONE="Asia/Shanghai"
+      - TZ="Asia/Shanghai"
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
