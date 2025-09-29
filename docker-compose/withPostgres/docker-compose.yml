@@ -1,9 +1,5 @@
 version: '3.8'
 
-volumes:
-  db_storage:
-  n8n_storage:
-
 services:
   postgres:
     image: postgres:16
@@ -15,7 +11,7 @@ services:
       - POSTGRES_NON_ROOT_USER
       - POSTGRES_NON_ROOT_PASSWORD
     volumes:
-      - db_storage:/var/lib/postgresql/data
+      - C:\Users\Administrator\DockerData\n8n_data\postgres:/var/lib/postgresql/data
       - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
@@ -31,6 +27,7 @@ services:
       - TZ="Asia/Shanghai"
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
+      - N8N_DEFAULT_LOCALE=zh-CN
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
@@ -42,7 +39,8 @@ services:
     links:
       - postgres
     volumes:
-      - n8n_storage:/home/node/.n8n
+      - C:\Users\Administrator\DockerData\n8n_data\n8n:/home/node/.n8n
+      - C:\Users\Administrator\DockerData\n8n_data\n8n-editor-ui:/usr/local/lib/node_modules/n8n/node_modules/n8n-editor-ui/dist
     depends_on:
       postgres:
         condition: service_healthy
